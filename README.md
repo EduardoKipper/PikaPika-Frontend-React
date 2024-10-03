@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# PikaPika Frontend React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Feito por
+[Zac Milioli](https://www.linkedin.com/in/zac-milioli/), [Eduardo Kipper](https://www.linkedin.com/in/eduardo-kipper-3451771a4/), [Pedro Esmeraldino](https://www.linkedin.com/in/pedro-esmeraldino-922b82214/), [Gabriel Antônio Maida](https://www.linkedin.com/in/gabrielmaida/)
 
-## Available Scripts
+## Como utilizar
 
-In the project directory, you can run:
+O sistema funciona executando o Back-End e o Front-End de formas separadas. Este repositório se refere ao Frontend, para utilizá-lo siga as intruções:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Primeiramente, abra um terminal na raíz do projeto e execute os comandos:
+```bash
+npm install
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+npm start
+```
 
-### `npm test`
+Com isso, o Front estará disponível e rodando na porta 3000 -> `http://localhost:3000/`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Sobre o projeto
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+O projeto PikaPika é um sistema de criação de times Pokémon. O sistema permite que o usuário busque por dados dos Pokémon através do nome ou pokedéx e adicione-os ou apague-os de seu time.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Desenvolvido com React no Front-End e Node.js no Back-End para avaliação da disciplina de Ferramentas de Implantação Contínua e DevOps.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+As documentações sem encontram na pasta ```docs/```.
