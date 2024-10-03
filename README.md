@@ -12,8 +12,6 @@ Primeiramente, abra um terminal na raíz do projeto e execute os comandos:
 ```bash
 npm install
 
-cd pikapika
-
 npm start
 ```
 
