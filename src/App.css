@@ -68,11 +68,11 @@ body {
   background-color: rgb(74, 74, 74);
   height: 75px;
   margin: 0 auto;
-  padding: 0 5vw;
-  border-radius: 20px;
+  padding: 0 10%;
+  border-radius: 5px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items:center;
+  justify-content: space-around;
 }
 
 .pokemonSearched{
@@ -83,7 +83,8 @@ body {
 .pokemonInfo {
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 15px;
+  width: 50%;
+  padding: 3% 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
