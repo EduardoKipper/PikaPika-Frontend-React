@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import api from './Api';
-import Team from './Team';
+
 
 class Pokemon extends Component {
     constructor(props) {
@@ -11,18 +11,64 @@ class Pokemon extends Component {
             image: '',
             cardImage: '',
             types: [],
+            team: [
+                { id: 0, nome: "", img: "" },
+                { id: 1, nome: "", img: "" },
+                { id: 2, nome: "", img: "" },
+                { id: 3, nome: "", img: "" },
+                { id: 4, nome: "", img: "" },
+                { id: 5, nome: "", img: "" },
+            ]
         };
-
-        // Ref para acessar o componente Team
-        this.teamRef = React.createRef();
     }
 
-    // Manipulador da busca
+    postPokemon = (event) => {
+        event.preventDefault();
+
+        const { team, name, image } = this.state;
+
+        try {
+            // Verifica se há um slot vazio
+            const emptySlot = team.findIndex(pokemon => pokemon.nome === "");
+
+            if (emptySlot !== -1) {
+                let newTeam = team.slice();
+                newTeam[emptySlot] = {
+                    id: emptySlot,
+                    nome: name,
+                    img: image
+                };
+
+                this.setState({ team: newTeam }, () => { });
+
+                alert("Pokémon adicionado ao time com sucesso");
+            } else {
+                alert("Excedeu o limite máximo do time");
+            }
+        } catch (error) {
+            alert('Erro ao adicionar Pokémon ao time');
+        }
+    }
+
+    deletePokemon = (index) => {
+        const { team } = this.state;
+        if (index !== -1) {
+            let newTeam = team.slice();
+            newTeam[index] = { id: index, nome: "", img: "" };
+            this.setState({ team: newTeam }, () => {
+                console.log(this.state.team);
+            });
+            alert(`Pokemon removido do time com sucesso`);
+        } else {
+            alert('Pokémon não encontrado');
+        }
+    }
+
     searchSubmitHandler = async (event) => {
         try {
             event.preventDefault();
 
-            const query = document.getElementById('query').value;
+            const query = document.getElementById('pokemon').value;
 
             const response = await api.get(`/api/${query}`, {});
 
@@ -38,39 +84,39 @@ class Pokemon extends Component {
         }
     }
 
-    // Manipulador do envio do formulário para adicionar o Pokémon
-    postSubmitHandler = async (event) => {
-        try {
-            event.preventDefault();
-
-            const { name } = this.state;
-
-            // Realiza a requisição para adicionar o Pokémon
-            const response = await api.post(`/api/${name.toLowerCase()}`, {});
-
-            // Após adicionar, recarrega os dados do time
-            this.teamRef.current.loadHandler(); // Chama o método loadHandler do componente Team
-        } catch (error) {
-            console.error("Execution error:", error);
-        }
-    }
-
     render() {
         const pokemon = this.state;
 
         return (
             <div>
-                <div className="container py-3 my-2">
-                    <h1>Pika Pika</h1>
-                </div>
                 <div className="container py-2" id="fundo">
-                    <Team ref={this.teamRef} />
+                    <div className="container py-2 mb-2">
+                        <h4>Seu Time Pokemon:</h4>
+                        <div className="row">
+                            <ul id="pokeTeam" className="pokeTeam col">
+                                {this.state.team.map((poke, index) => (
+                                    <li onClick={() => this.deletePokemon(index)} key={index} className="button">
+                                        <img
+                                            src={poke.img}
+                                            alt={poke.nome}
+                                            id={index}
+                                            title={`${(index + 1)} - ${poke.nome}`}
+                                            height="60"
+                                        />
+                                    </li>)
+                                )}
+                            </ul>
+                            <button className="btn btn-primary col-1">
+                                +
+                            </button>
+                        </div>
+                    </div>
                     <h4 className='mt-2'>Buscar Pokemon:</h4>
                     <form className="container row" onSubmit={this.searchSubmitHandler}>
                         <div className="col-10">
                             <input
                                 type="text"
-                                id="query"
+                                id="pokemon"
                                 className="form-control"
                                 placeholder="Digite o Nome do Pokemon ou Número da Pokedex:"
                             />
@@ -90,16 +136,9 @@ class Pokemon extends Component {
                                     alt={pokemon.name}
                                     height="300px"
                                 />
-                                <img
-                                    id="cardImage"
-                                    className="mx-auto"
-                                    src={pokemon.cardImage}
-                                    alt={pokemon.name}
-                                    height="300px"
-                                />
                             </>
                         )}
-                        <form className="pokemonInfo align-self-center mx-auto" onSubmit={this.postSubmitHandler}>
+                        <form className="pokemonInfo align-self-center mx-auto" onSubmit={this.postPokemon}>
                             <h3>Dados Pokemon</h3>
                             <p>
                                 <strong>Número da Pokedex: </strong>
@@ -124,8 +163,6 @@ class Pokemon extends Component {
                             </button>
                         </form>
                     </div>
-
-
                 </div>
             </div>
         );
