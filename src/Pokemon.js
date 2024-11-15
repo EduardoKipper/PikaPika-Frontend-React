@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import api from './Api';
+import logo from './assets/logo.png'
 
 
 class Pokemon extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            id: '',
-            image: '',
-            cardImage: '',
+            userName: '',
+            name: 'Pika Pika',
+            id: '0',
+            image: logo,
             types: [],
             team: [
                 { id: 0, nome: "", img: "" },
@@ -52,15 +53,17 @@ class Pokemon extends Component {
 
     deletePokemon = (index) => {
         const { team } = this.state;
-        if (index !== -1) {
-            let newTeam = team.slice();
-            newTeam[index] = { id: index, nome: "", img: "" };
-            this.setState({ team: newTeam }, () => {
-                console.log(this.state.team);
-            });
-            alert(`Pokemon removido do time com sucesso`);
-        } else {
-            alert('Pokémon não encontrado');
+        if (team[index].nome !== "") {
+            if (index !== -1) {
+                let newTeam = team.slice();
+                newTeam[index] = { id: index, nome: "", img: "" };
+                this.setState({ team: newTeam }, () => {
+                    console.log(this.state.team);
+                });
+                alert(`Pokemon removido do time com sucesso`);
+            } else {
+                alert('Pokémon não encontrado');
+            }
         }
     }
 
@@ -80,7 +83,43 @@ class Pokemon extends Component {
                 types: response.data.pokemonTipo,
             });
         } catch (error) {
-            console.error("Execution error:", error);
+            alert(error + "- Pokemon não encontrado")
+            console.error("Error:", error);
+        }
+    }
+
+    postTeam = async (userName) => {
+        try {
+            const { team } = this.state
+            const response = await api.post(`/api/${userName}`, {
+                team
+            });
+            alert(response.status + "- Time adicionado com sucesso")
+        } catch (error) {
+            alert(error + "- Não foi possivel salvar o time")
+            console.error("Error:", error);
+        }
+    }
+
+    deleteTeam = async (userName) => {
+        try {
+            console.log(userName)
+            const response = await api.delete(`/api/${userName}`, {});
+            this.setState({
+                team: [
+                    { id: 0, nome: "", img: "" },
+                    { id: 1, nome: "", img: "" },
+                    { id: 2, nome: "", img: "" },
+                    { id: 3, nome: "", img: "" },
+                    { id: 4, nome: "", img: "" },
+                    { id: 5, nome: "", img: "" },
+                ]
+            })
+            alert(response + "- Time excluído com sucesso")
+
+        } catch (error) {
+            alert(error + "- Não foi possivel excluir o time")
+            console.error("Error:", error);
         }
     }
 
@@ -91,7 +130,8 @@ class Pokemon extends Component {
             <div>
                 <div className="container py-2" id="fundo">
                     <div className="container py-2 mb-2">
-                        <h4>Seu Time Pokemon:</h4>
+                        <h4>Time Pokemon: {pokemon.userName}</h4>
+
                         <div className="row">
                             <ul id="pokeTeam" className="pokeTeam col">
                                 {this.state.team.map((poke, index) => (
@@ -106,7 +146,10 @@ class Pokemon extends Component {
                                     </li>)
                                 )}
                             </ul>
-                            <button className="btn btn-primary col-1">
+                            <button className="btn btn-danger col-1" onClick={() => this.deleteTeam(pokemon.userName)}>
+                                X
+                            </button>
+                            <button className="btn btn-primary col-1" onClick={() => this.postTeam(pokemon.userName)}>
                                 +
                             </button>
                         </div>

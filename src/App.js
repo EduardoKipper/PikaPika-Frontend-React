@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Pokemon from './Pokemon';
-
-
+import api from './Api';
 
 class App extends Component {
   constructor(props) {
@@ -10,6 +9,41 @@ class App extends Component {
     this.state = {
       user: '',
     };
+
+    this.pokemon = React.createRef();
+  }
+
+  getTeam = async (event) => {
+    try {
+      event.preventDefault();
+
+      const query = document.getElementById('user').value;
+
+      const response = await api.get(`/user/${query}}`, {});
+
+      const teamData = response.data;
+      let newTeam = this.pokemon.current.state.team.slice();
+
+      teamData.forEach((pokemon, index) => {
+        if (index < 6) {
+          newTeam[index] = {
+            id: index,
+            nome: pokemon.nome,
+            img: pokemon.img
+          };
+        }
+      });
+
+      this.pokemon.current.setState({
+        userName: query,
+        team: newTeam
+      });
+
+      console.log(response);
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   render() {
@@ -20,7 +54,7 @@ class App extends Component {
             <div className='col-2'>
               <h1>Pika Pika</h1>
             </div>
-            <form className='d-flex col align-items-center'>
+            <form className='d-flex col align-items-center' onSubmit={this.getTeam}>
               <div className='row'>
                 <div className='col'>
                   <input
@@ -38,7 +72,7 @@ class App extends Component {
             </form>
           </div>
         </div>
-        <Pokemon />
+        <Pokemon ref={this.pokemon} />
       </div >
     );
   }
