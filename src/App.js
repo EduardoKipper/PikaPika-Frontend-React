@@ -19,9 +19,9 @@ class App extends Component {
 
       const query = document.getElementById('user').value;
 
-      const response = await api.get(`/user/${query}}`, {});
+      const response = await api.get(`/user/${query}`, {});
 
-      const teamData = response.data;
+      const teamData = response.data.team;
       let newTeam = this.pokemon.current.state.team.slice();
 
       teamData.forEach((pokemon, index) => {

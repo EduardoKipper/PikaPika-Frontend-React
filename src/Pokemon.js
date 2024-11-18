@@ -23,6 +23,27 @@ class Pokemon extends Component {
         };
     }
 
+    getPokemon = async (event) => {
+        try {
+            event.preventDefault();
+
+            const query = document.getElementById('pokemon').value;
+
+            const response = await api.get(`/api/${query}`, {});
+
+            this.setState({
+                name: response.data.pokemonNome,
+                id: response.data.pokemonPokedex,
+                image: response.data.pokemonImg,
+                cardImage: response.data.cardImg,
+                types: response.data.pokemonTipo,
+            });
+        } catch (error) {
+            alert(error + "- Pokemon não encontrado")
+            console.error("Error:", error);
+        }
+    }
+
     postPokemon = (event) => {
         event.preventDefault();
 
@@ -67,44 +88,22 @@ class Pokemon extends Component {
         }
     }
 
-    searchSubmitHandler = async (event) => {
-        try {
-            event.preventDefault();
-
-            const query = document.getElementById('pokemon').value;
-
-            const response = await api.get(`/api/${query}`, {});
-
-            this.setState({
-                name: response.data.pokemonNome,
-                id: response.data.pokemonPokedex,
-                image: response.data.pokemonImg,
-                cardImage: response.data.cardImg,
-                types: response.data.pokemonTipo,
-            });
-        } catch (error) {
-            alert(error + "- Pokemon não encontrado")
-            console.error("Error:", error);
-        }
-    }
-
-    postTeam = async (userName) => {
-        try {
-            const { team } = this.state
-            const response = await api.post(`/api/${userName}`, {
-                team
-            });
-            alert(response.status + "- Time adicionado com sucesso")
-        } catch (error) {
-            alert(error + "- Não foi possivel salvar o time")
-            console.error("Error:", error);
+    postTeam = async (userName) => { 
+        try { 
+            const team  = this.state.team; // Ajuste para pegar o estado de 'pokemon' 
+            console.log(team); 
+            const response = await api.post(`/user/${userName}`, { team }); 
+            alert(response.status + " - Time adicionado com sucesso"); 
+        } catch (error) { 
+            alert(error + " - Não foi possível salvar o time"); 
+            console.error("Error:", error); 
         }
     }
 
     deleteTeam = async (userName) => {
         try {
             console.log(userName)
-            const response = await api.delete(`/api/${userName}`, {});
+            const response = await api.delete(`/user/${userName}`, {});
             this.setState({
                 team: [
                     { id: 0, nome: "", img: "" },
@@ -155,7 +154,7 @@ class Pokemon extends Component {
                         </div>
                     </div>
                     <h4 className='mt-2'>Buscar Pokemon:</h4>
-                    <form className="container row" onSubmit={this.searchSubmitHandler}>
+                    <form className="container row" onSubmit={this.getPokemon}>
                         <div className="col-10">
                             <input
                                 type="text"
